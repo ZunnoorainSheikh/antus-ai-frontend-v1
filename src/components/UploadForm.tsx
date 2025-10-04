@@ -109,16 +109,24 @@ const UploadForm = ({ onImageProcessed, isLoading, setIsLoading, backendUrl }: U
 
       showSuccess(`${selectedPhase.charAt(0).toUpperCase() + selectedPhase.slice(1)} phase processing completed!`)
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Processing error:', error)
       
-      if (error.code === 'ECONNABORTED') {
+      const axiosError = error as {
+        code?: string;
+        response?: {
+          data?: { detail?: string };
+        };
+        request?: unknown;
+      };
+      
+      if (axiosError.code === 'ECONNABORTED') {
         showError('Request timeout. Please try again with a smaller image.')
-      } else if (error.response) {
+      } else if (axiosError.response) {
         // Server responded with error
-        const errorMessage = error.response.data?.detail || 'Processing failed'
+        const errorMessage = axiosError.response.data?.detail || 'Processing failed'
         showError(`Error: ${errorMessage}`)
-      } else if (error.request) {
+      } else if (axiosError.request) {
         // Network error
         showError('Cannot connect to backend server. Please check if it\'s running.')
       } else {

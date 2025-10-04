@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Download } from 'lucide-react'
+import Image from 'next/image'
 
 interface ImageDisplayProps {
   originalImage: string | null
@@ -12,7 +13,6 @@ interface ImageDisplayProps {
 
 const ImageDisplay = ({ originalImage, processedImage, isLoading, selectedPhase }: ImageDisplayProps) => {
   const [imageView, setImageView] = useState('side-by-side') // 'side-by-side', 'overlay', 'original', 'processed'
-  const [sliderValue, setSliderValue] = useState(50)
 
   // Switch to side-by-side view if current view requires processed image but it's not available
   useEffect(() => {
@@ -77,10 +77,13 @@ const ImageDisplay = ({ originalImage, processedImage, isLoading, selectedPhase 
           </button>
         </div>
         <div className="image-container">
-          <img
+          <Image
             src={originalImage}
             alt="Original medical image"
             className="w-full h-auto max-h-96 object-contain"
+            width={800}
+            height={600}
+            style={{ maxHeight: '24rem', objectFit: 'contain' }}
           />
         </div>
       </div>
@@ -101,10 +104,13 @@ const ImageDisplay = ({ originalImage, processedImage, isLoading, selectedPhase 
             </button>
           </div>
           <div className="image-container">
-            <img
+            <Image
               src={processedImage}
               alt={`${selectedPhase} phase processed image`}
               className="w-full h-auto max-h-96 object-contain"
+              width={800}
+              height={600}
+              style={{ maxHeight: '24rem', objectFit: 'contain' }}
             />
           </div>
         </div>
