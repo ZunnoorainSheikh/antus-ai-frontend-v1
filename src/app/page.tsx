@@ -37,7 +37,7 @@ export default function Home() {
               <h1 className="text-3xl font-bold text-gray-900">
                 🧠 {APP_CONFIG.NAME}
               </h1>
-              <p className="text-gray-600 mt-1">{APP_CONFIG.DESCRIPTION}</p>
+              {/* <p className="text-gray-600 mt-1">{APP_CONFIG.DESCRIPTION}</p> */}
             </div>
             <div className="text-sm text-gray-500">
               v{APP_CONFIG.VERSION}
